@@ -1,0 +1,13 @@
+.task-block {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.img-del {
+  width: 22px;
+}
+
+.img-edit {
+  width: 20px;
+}

@@ -1,0 +1,14 @@
+.task-edit-block {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  font-size: 30px;
+}
+
+.img-cancel {
+  width: 22px;
+}
+
+.img-save {
+  width: 20px;
+}

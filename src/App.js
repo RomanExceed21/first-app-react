@@ -1,22 +1,21 @@
-import Tasks from "./Tasks";
-import './App.css'
-import {useState} from 'react'
+import React, { useState } from 'react';
+import TaskBlock from './Components/TaskBlockComponent/TaskBlock';
+import TaskEdit from './Components/TaskEditComponent/TaskEdit';
+import './App.css';
 
 const App = () => {
-  const [allTasks, setTasks] = useState([])
-  const [userInput, setUserInput] = useState('')
-  const [editNum, setEditNum] = useState(null)
-  const [inputCorrections, setInputCorrections] = useState('')
-  
+  const [allTasks, setTasks] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  const [editNum, setEditNum] = useState(null);
 
   const changeValue = (e) => {
     setUserInput(e.target.value);
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     addTask(userInput);
-    setUserInput('')
+    setUserInput('');
   }
 
   const addTask = (userInput) => {
@@ -25,66 +24,40 @@ const App = () => {
         text: userInput,
         isCheck: false
       }
-      setTasks([...allTasks, task])
+      setTasks([...allTasks, task]);
     }
   }
 
-  const removeTask = (index) => {
-    setTasks([...allTasks.slice(0, index), ...allTasks.slice(index + 1)])
- 
+  const handleEditTask = (index) => {
+    setEditNum(index);
   }
 
-  const doneTask = (index) => {
-    allTasks[index].isCheck = !allTasks[index].isCheck;  
-    setTasks([...allTasks]);
-  }
-
-  const editTask = (index) => {
-    setEditNum(index)
-  }
-
-  const cancelEdit = () => {
-    setEditNum(null)
-  }
-
-  const changeValueCorrect = (e) => {
-    setInputCorrections(e.target.value);
-  }
-
-  const saveCorrection = (index) => {
-    if (inputCorrections) {
-      allTasks[index].text = inputCorrections;
-      setTasks([...allTasks]);
-      setEditNum(null)
-    }
+  const handleCancelEdit = () => {
+    setEditNum(null);
   }
 
   return (
-    <div className="App">
+    <div className='App'>
       <header>
         <h1>Список задач</h1>
       </header>
-      <form onSubmit={handleSubmit}>
-        <input onChange={changeValue} type="text" value={userInput}/>
-        <button>Save</button>      
-      </form>
-      <div className="all-input-tasks">
+      <div className='input-block'>
+        <input onChange={changeValue} type='text' value={userInput}/>
+        <button onClick={handleSubmit}>Save</button>      
+      </div>
+      <div className='all-input-tasks'>
         {
-          allTasks.map((value, index) => 
-            <Tasks 
-              key={index} 
-              text={value.text} 
-              isCheck={value.isCheck}
-              addTask={addTask}
-              index={index}
-              removeTask={removeTask}
-              doneTask={doneTask}
-              editTask={editTask}
-              editNum={editNum}
-              cancelEdit={cancelEdit}
-              saveCorrection={saveCorrection}
-              changeValueCorrect={changeValueCorrect}
-            />)
+          allTasks.map((task, index) => {
+            const params = { task, index, allTasks, setTasks };
+            const key = `task-${index}`;
+            if (editNum !== index) {
+              params.onEditTask = handleEditTask;
+            } else {
+              params.onCancelEdit = handleCancelEdit;
+              params.onSetEditNum = setEditNum;
+            }
+            return (editNum !== index ? <TaskBlock key={key} {...params} /> : <TaskEdit key={key} {...params} />)
+          })
         }
       </div>
     </div>
