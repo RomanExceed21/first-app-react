@@ -1,7 +1,7 @@
 import React from 'react';
 import del from '../../img/del.png';
 import edit from '../../img/edit.png';
-import './TaskBlockComponent.css'
+import './TaskBlockComponent.css';
 
 const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
   const { isCheck, text } = task;
@@ -21,7 +21,7 @@ const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
         type='checkbox'
         onChange={() => doneTask(index)}
       />
-      <p className={!isCheck ? 'task-text' : 'task-text done-text'}>{text}</p>
+      <p className={`task-text' ${isCheck ? 'done-text' : ''}`}>{text}</p>
       <img  
         src={del} 
         alt=''
