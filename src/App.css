@@ -1,0 +1,21 @@
+body {
+  background-color: rgb(184, 221, 167);
+  margin: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.all-input-tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.done-text {
+  color: grey;
+  text-decoration: line-through;
+}
