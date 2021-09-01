@@ -33,14 +33,7 @@ const App = () => {
       }).then(res => {
         setTasks(res.data.data);
       });
-    }
-
-    const task = {
-      text: userInput,
-      isCheck: false
-    }
-    setTasks([...allTasks, task]);
-
+    }    
   }
 
   const handleEditTask = (index) => {

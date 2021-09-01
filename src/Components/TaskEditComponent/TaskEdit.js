@@ -18,11 +18,9 @@ const TaskEdit = ({onCancelEdit, index, task, onSetEditNum, setTasks, allTasks})
         text: inputCorrections
       }).then(res => {
         setTasks(res.data.data);
+        onSetEditNum(null); 
       });
-    }
-    allTasks[index].text = inputCorrections;
-    setTasks([...allTasks]);
-    onSetEditNum(null);    
+    }   
   }
 
   return (

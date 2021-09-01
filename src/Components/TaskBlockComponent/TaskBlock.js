@@ -14,10 +14,9 @@ const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
   }
 
   const doneTask = async (index) => {
-    const { _id, isCheck } = allTasks[index]
+    const { _id, isCheck } = allTasks[index];
     await axios.patch('http://localhost:8000/updateTask', {
-      _id: _id,
-      isCheck: !isCheck
+      _id, isCheck: !isCheck
     }).then(res => {
       setTasks(res.data.data);      
     });
