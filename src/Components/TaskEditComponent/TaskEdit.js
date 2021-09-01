@@ -1,4 +1,5 @@
 import React, { useState} from 'react';
+import axios from 'axios';
 import cancel from '../../img/cancel.png';
 import save from '../../img/save.png';
 import './TaskEditComponent.css';
@@ -10,12 +11,16 @@ const TaskEdit = ({onCancelEdit, index, task, onSetEditNum, setTasks, allTasks})
     setInputCorrections(e.target.value);
   }
 
-  const saveCorrection = (index) => {
+  const saveCorrection = async (index) => {
     if (inputCorrections) {
-      allTasks[index].text = inputCorrections;
-      setTasks([...allTasks]);
-      onSetEditNum(null);
-    }
+      await axios.patch('http://localhost:8000/updateTask', {
+        _id: allTasks[index]._id,
+        text: inputCorrections
+      }).then(res => {
+        setTasks(res.data.data);
+        onSetEditNum(null); 
+      });
+    }   
   }
 
   return (
