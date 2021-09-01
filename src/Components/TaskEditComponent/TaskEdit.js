@@ -12,17 +12,17 @@ const TaskEdit = ({onCancelEdit, index, task, onSetEditNum, setTasks, allTasks})
   }
 
   const saveCorrection = async (index) => {
-    await axios.patch('http://localhost:8000/updateTask', {
-      _id: allTasks[index]._id,
-      text: inputCorrections
-    }).then(res => {
-      setTasks(res.data.data);
-    });
     if (inputCorrections) {
-      allTasks[index].text = inputCorrections;
-      setTasks([...allTasks]);
-      onSetEditNum(null);
+      await axios.patch('http://localhost:8000/updateTask', {
+        _id: allTasks[index]._id,
+        text: inputCorrections
+      }).then(res => {
+        setTasks(res.data.data);
+      });
     }
+    allTasks[index].text = inputCorrections;
+    setTasks([...allTasks]);
+    onSetEditNum(null);    
   }
 
   return (

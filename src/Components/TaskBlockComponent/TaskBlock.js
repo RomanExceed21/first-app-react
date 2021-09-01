@@ -5,21 +5,22 @@ import edit from '../../img/edit.png';
 import './TaskBlockComponent.css';
 
 const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
-  const { isCheck, text } = task;
+  const { isCheck, text, _id } = task;
 
   const removeTask = async (_id) => {
     await axios.delete(`http://localhost:8000/deleteTask?_id=${_id}`).then(res => {
       setTasks(res.data.data);      
-    })
+    });
   }
 
   const doneTask = async (index) => {
+    const { _id, isCheck } = allTasks[index]
     await axios.patch('http://localhost:8000/updateTask', {
-      _id: allTasks[index]._id,
-      isCheck: !allTasks[index].isCheck
+      _id: _id,
+      isCheck: !isCheck
     }).then(res => {
       setTasks(res.data.data);      
-    })
+    });
   }
 
   return (
@@ -28,12 +29,12 @@ const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
         type='checkbox' 
         onChange={() => doneTask(index)}
       />
-      <p className={`task-text' ${isCheck ? 'done-text' : ''}`}>{text}</p>
+      <p className={`task-text ${isCheck ? 'done-text' : ''}`}>{text}</p>
       <img  
         src={del} 
         alt=''
         className='img-del'
-        onClick={() => removeTask(task._id)} 
+        onClick={() => removeTask(_id)} 
       />
       <img 
         src={edit} 

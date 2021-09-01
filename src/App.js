@@ -26,17 +26,21 @@ const App = () => {
   }
 
   const addTask = async (userInput) => {
-    await axios.post('http://localhost:8000/createTask', {
-      text: userInput, 
-      isCheck: false
-    });
     if (userInput) {
-      const task = {
-        text: userInput,
+      await axios.post('http://localhost:8000/createTask', {
+        text: userInput, 
         isCheck: false
-      }
-      setTasks([...allTasks, task]);
+      }).then(res => {
+        setTasks(res.data.data);
+      });
     }
+
+    const task = {
+      text: userInput,
+      isCheck: false
+    }
+    setTasks([...allTasks, task]);
+
   }
 
   const handleEditTask = (index) => {

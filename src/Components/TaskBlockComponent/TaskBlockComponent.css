@@ -4,6 +4,10 @@
   margin-top: 15px;
 }
 
+.task-text {
+  margin: 0;
+}
+
 .img-del {
   width: 22px;
 }
