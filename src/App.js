@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import TaskBlock from './Components/TaskBlockComponent/TaskBlock';
 import TaskEdit from './Components/TaskEditComponent/TaskEdit';
 import './App.css';
@@ -7,6 +8,12 @@ const App = () => {
   const [allTasks, setTasks] = useState([]);
   const [userInput, setUserInput] = useState('');
   const [editNum, setEditNum] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/allTasks').then(res => {
+      setTasks(res.data.data);
+    });
+  })
 
   const changeValue = (e) => {
     setUserInput(e.target.value);
@@ -18,7 +25,11 @@ const App = () => {
     setUserInput('');
   }
 
-  const addTask = (userInput) => {
+  const addTask = async (userInput) => {
+    await axios.post('http://localhost:8000/createTask', {
+      text: userInput, 
+      isCheck: false
+    });
     if (userInput) {
       const task = {
         text: userInput,
