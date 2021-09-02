@@ -8,12 +8,14 @@ const App = () => {
   const [allTasks, setTasks] = useState([]);
   const [userInput, setUserInput] = useState('');
   const [editNum, setEditNum] = useState(null);
+  allTasks.sort((a, b) => a.isCheck - b.isCheck)
+
 
   useEffect(() => {
     axios.get('http://localhost:8000/allTasks').then(res => {
       setTasks(res.data.data);
     });
-  })
+  }, [setTasks])
 
   const changeValue = (e) => {
     setUserInput(e.target.value);
@@ -25,9 +27,9 @@ const App = () => {
     setUserInput('');
   }
 
-  const addTask = async (userInput) => {
+  const addTask = (userInput) => {
     if (userInput) {
-      await axios.post('http://localhost:8000/createTask', {
+      axios.post('http://localhost:8000/createTask', {
         text: userInput, 
         isCheck: false
       }).then(res => {
@@ -46,12 +48,14 @@ const App = () => {
 
   return (
     <div className='App'>
-      <header>
-        <h1>Список задач</h1>
-      </header>
-      <div className='input-block'>
-        <input onChange={changeValue} type='text' value={userInput}/>
-        <button onClick={handleSubmit}>Save</button>      
+      <div className='header'>
+        <header>
+          <h1>Список задач</h1>
+        </header>
+        <div className='input-block'>
+          <input className='input-task' onChange={changeValue} type='text' value={userInput}/>
+          <button className='add-button' onClick={handleSubmit}>Save Task</button>      
+      </div>
       </div>
       <div className='all-input-tasks'>
         {

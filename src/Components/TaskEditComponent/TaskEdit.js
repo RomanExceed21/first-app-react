@@ -11,9 +11,9 @@ const TaskEdit = ({onCancelEdit, index, task, onSetEditNum, setTasks, allTasks})
     setInputCorrections(e.target.value);
   }
 
-  const saveCorrection = async (index) => {
+  const saveCorrection = (index) => {
     if (inputCorrections) {
-      await axios.patch('http://localhost:8000/updateTask', {
+      axios.patch('http://localhost:8000/updateTask', {
         _id: allTasks[index]._id,
         text: inputCorrections
       }).then(res => {
