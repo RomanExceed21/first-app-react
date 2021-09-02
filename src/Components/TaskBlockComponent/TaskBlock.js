@@ -7,15 +7,15 @@ import './TaskBlockComponent.css';
 const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
   const { isCheck, text, _id } = task;
 
-  const removeTask = async (_id) => {
-    await axios.delete(`http://localhost:8000/deleteTask?_id=${_id}`).then(res => {
+  const removeTask =  (_id) => {
+    axios.delete(`http://localhost:8000/deleteTask?_id=${_id}`).then(res => {
       setTasks(res.data.data);      
     });
   }
 
-  const doneTask = async (index) => {
+  const doneTask = (index) => {
     const { _id, isCheck } = allTasks[index];
-    await axios.patch('http://localhost:8000/updateTask', {
+    axios.patch('http://localhost:8000/updateTask', {
       _id, isCheck: !isCheck
     }).then(res => {
       setTasks(res.data.data);      
@@ -26,20 +26,26 @@ const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
     <div className='task-block'>
       <input 
         type='checkbox' 
+        checked={task.isCheck}
         onChange={() => doneTask(index)}
       />
       <p className={`task-text ${isCheck ? 'done-text' : ''}`}>{text}</p>
+
       <img  
         src={del} 
         alt=''
         className='img-del'
         onClick={() => removeTask(_id)} 
       />
-      <img 
-        src={edit} 
-        alt=''
-        className='img-edit'
-        onClick={() => onEditTask(index)}/>
+      {isCheck 
+        ? <div />
+        :<img 
+          src={edit} 
+          alt=''
+          className='img-edit'
+          onClick={() => onEditTask(index)}
+        />}
+      
     </div>
   )
 }

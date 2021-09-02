@@ -1,8 +1,17 @@
 .task-edit-block {
   display: flex;
   align-items: center;
-  margin-top: 15px;
-  font-size: 30px;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.edit-task-input {
+  width: 85%;
+  font-size: 21px;
+  margin: 0 8px 0 2px;
+  border: 1px solid rgb(177, 175, 175);
+  background-color: rgb(184, 221, 167);
+  box-shadow: 5px 8px 10px rgb(188, 245, 155);
 }
 
 .img-cancel {
@@ -10,5 +19,5 @@
 }
 
 .img-save {
-  width: 20px;
+  width: 22px;
 }

@@ -1,11 +1,22 @@
 .task-block {
   display: flex;
   align-items: center;
-  margin-top: 15px;
+  width: 100%;
+  margin-top: 25px;
 }
 
 .task-text {
-  margin: 0;
+  width: 85%;
+  font-size: 21px;
+  margin: 0 8px 0 2px;
+  border: 1px solid rgb(177, 175, 175);
+  box-shadow: 5px 8px 10px rgb(188, 245, 155);
+}
+
+.done-text {
+  color: grey;
+  text-decoration: line-through;
+  box-shadow: none;
 }
 
 .img-del {
@@ -13,5 +24,5 @@
 }
 
 .img-edit {
-  width: 20px;
+  width: 22px;
 }
