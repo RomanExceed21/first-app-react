@@ -37,9 +37,8 @@ const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
         className='img-del'
         onClick={() => removeTask(_id)} 
       />
-      {isCheck 
-        ? <div />
-        :<img 
+      {!isCheck &&
+        <img 
           src={edit} 
           alt=''
           className='img-edit'
