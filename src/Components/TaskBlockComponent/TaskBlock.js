@@ -1,5 +1,9 @@
 import axios from 'axios';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Checkbox from '@material-ui/core/Checkbox';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import Favorite from '@material-ui/icons/Favorite';
 import del from '../../img/del.png';
 import edit from '../../img/edit.png';
 import './TaskBlockComponent.css';
@@ -24,11 +28,15 @@ const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
 
   return (
     <div className='task-block'>
-      <input 
-        type='checkbox' 
+      <>
+      <Checkbox
+        color='primary'
+        icon={<FavoriteBorder />}
+        checkedIcon={<Favorite/>}
         checked={task.isCheck}
         onChange={() => doneTask(index)}
       />
+            
       <p className={`task-text ${isCheck ? 'done-text' : ''}`}>{text}</p>
 
       <img  
@@ -36,14 +44,15 @@ const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
         alt=''
         className='img-del'
         onClick={() => removeTask(_id)} 
-      />
-      {!isCheck &&
-        <img 
-          src={edit} 
-          alt=''
-          className='img-edit'
+      />           
+      {!isCheck && 
+        <Link to={`/edit/:${_id}`}><img src={edit} 
+          alt='' 
+          className='img-edit' 
           onClick={() => onEditTask(index)}
-        />}
+      /></Link>}
+      </>
+
       
     </div>
   )

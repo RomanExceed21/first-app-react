@@ -1,6 +1,7 @@
 body {
   background-color: rgb(184, 221, 167);
   margin: 0;
+  font-family: sans-serif;
 }
 
 .header {
@@ -41,7 +42,7 @@ body {
   width: 90%;
   overflow: auto;
   height: 730px;
-  margin: 2% 0 0 0;
+  margin: 20px 0 0 0;
 }
 
 ::-webkit-scrollbar {
@@ -49,8 +50,16 @@ body {
 }
 
 @media screen and (max-width: 550px) {
+  .header {
+    width: 100%;
+  }
+
   .all-input-tasks {
     overflow: auto;
     height: 570px;
+  }
+
+  .input-task {
+    width: 65%;
   }
 }
