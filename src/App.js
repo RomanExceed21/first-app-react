@@ -18,7 +18,6 @@ const App = () => {
   const [editRoutVal, setEditRoutVal] = useState('');
   allTasks.sort((a, b) => a.isCheck - b.isCheck);
 
-
   useEffect(() => {
     axios.get('http://localhost:8000/allTasks').then(res => {
       setTasks(res.data.data);
@@ -44,14 +43,15 @@ const App = () => {
         setTasks(res.data.data);
       });
     }    
-  }
+  } 
 
   const handleEditTask = (index) => {
-    history.push(`/${allTasks[index]._id}`)
+    const { _id, text } = allTasks[index]
+    history.push(`/${_id}`)
     setEditNum(index);
-    setEditRoutVal(allTasks[index].text)
+    setEditRoutVal(text)
   }
-
+  
   const handleCancelEdit = () => {
     setEditNum(null);
   }
@@ -63,30 +63,20 @@ const App = () => {
           <h1>Список задач</h1>
         </header>
         <div className='input-block'>
-          <input className='input-task' onChange={changeValue} type='text' value={userInput}/>
-          <button className='add-button' onClick={handleSubmit}>Save Task</button>      
+          <input className='input-task' onChange={(e) => changeValue(e)} type='text' value={userInput}/>
+          <button className='add-button' onClick={(e) => handleSubmit(e)}>Save Task</button>      
         </div>
       </div>
         <Switch>
           <div className='all-input-tasks'>
             <Route path='/home'>
-              {
-                allTasks.map((task, index) => {
-                  const params = { task, index, allTasks, setTasks };
-                  const key = `task-${index}`;
-                  if (editNum !== index) {
-                    params.onEditTask = handleEditTask;
-                  } else {
-                    params.onCancelEdit = handleCancelEdit;
-                    params.onSetEditNum = setEditNum;
-                  }
-                  return (
-                    <TaskBlock key={key} {...params} /> 
-                    )
-                })
-              }
+              <TaskBlock 
+                allTasks={allTasks}
+                handleEditTask={handleEditTask}
+                setTasks={setTasks}
+              />
             </Route>
-          
+
             <Route path='/edit/:_id'>
               <TaskEdit 
                 onEditTask = {handleEditTask}
@@ -96,7 +86,7 @@ const App = () => {
                 index={editNum}
                 allTasks={allTasks}
                 editRoutVal={editRoutVal}
-                />
+              />
             </Route>
             <Redirect from='/' to='/home' />
           </div>

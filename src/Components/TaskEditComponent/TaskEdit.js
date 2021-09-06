@@ -14,7 +14,7 @@ const TaskEdit = ({onCancelEdit, index, task, onSetEditNum, setTasks, allTasks, 
   const changeValueCorrect = (e) => {
     setInputCorrections(e.target.value);
   }
-
+  
   const saveCorrection = (index) => {
     if (inputCorrections) {
       axios.patch('http://localhost:8000/updateTask', {
@@ -43,17 +43,19 @@ const TaskEdit = ({onCancelEdit, index, task, onSetEditNum, setTasks, allTasks, 
       />
       <Link to='/home'>
         <img 
-        src={cancel} 
-        alt='' className='img-cancel' 
-        onClick={() => onCancelEdit(index)} 
-      /></Link>
+          src={cancel} 
+          alt='' className='img-cancel' 
+          onClick={() => onCancelEdit(index)} 
+        />
+      </Link>
       <Link to='/home'>
-      <img 
-        src={save}
-        alt=''  
-        className='img-save' 
-        onClick={() => saveCorrection(index)} 
-      /></Link>
+        <img 
+          src={save}
+          alt=''  
+          className='img-save' 
+          onClick={() => saveCorrection(index)} 
+        />
+      </Link>
     </div>
   )
 }

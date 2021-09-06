@@ -8,9 +8,7 @@ import del from '../../img/del.png';
 import edit from '../../img/edit.png';
 import './TaskBlockComponent.css';
 
-const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
-  const { isCheck, text, _id } = task;
-
+const TaskBlock = ({allTasks, handleEditTask, setTasks}) => {
   const removeTask =  (_id) => {
     axios.delete(`http://localhost:8000/deleteTask?_id=${_id}`).then(res => {
       setTasks(res.data.data);      
@@ -27,34 +25,37 @@ const TaskBlock = ({allTasks, onEditTask, index, task, setTasks}) => {
   }
 
   return (
-    <div className='task-block'>
-      <>
-      <Checkbox
-        color='primary'
-        icon={<FavoriteBorder />}
-        checkedIcon={<Favorite/>}
-        checked={task.isCheck}
-        onChange={() => doneTask(index)}
-      />
-            
-      <p className={`task-text ${isCheck ? 'done-text' : ''}`}>{text}</p>
+    allTasks.map((task, index) => {
+      const { isCheck, text, _id } = task;
+      return (
+        <div key = {`task-${index}`} className='task-block'>
+          <Checkbox
+            color='primary'
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite/>}
+            checked={task.isCheck}
+            onChange={() => doneTask(index)}
+          />    
 
-      <img  
-        src={del} 
-        alt=''
-        className='img-del'
-        onClick={() => removeTask(_id)} 
-      />           
-      {!isCheck && 
-        <Link to={`/edit/:${_id}`}><img src={edit} 
-          alt='' 
-          className='img-edit' 
-          onClick={() => onEditTask(index)}
-      /></Link>}
-      </>
-
-      
-    </div>
+          <p className={`task-text ${isCheck ? 'done-text' : ''}`}>{text}</p>  
+          
+          <img  
+            src={del} 
+            alt=''
+            className='img-del'
+            onClick={() => removeTask(_id)} 
+          />           
+          {!isCheck && 
+            <Link to={`/edit/:${_id}`}>
+              <img src={edit} 
+                alt='' 
+                className='img-edit' 
+                onClick={() => handleEditTask(index)}
+              />
+            </Link>}
+        </div>  
+      )
+    })      
   )
 }
 
